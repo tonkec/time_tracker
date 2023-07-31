@@ -7,6 +7,7 @@ import {
   getDocs,
   getDoc,
   addDoc,
+  deleteDoc,
 } from 'firebase/firestore';
 import { firestore } from '../firebase';
 
@@ -76,6 +77,19 @@ export const firestoreApi = createApi({
       },
       invalidatesTags: ['Timer'],
     }),
+    deleteTimer: builder.mutation<any, any>({
+      async queryFn(id) {
+        try {
+          const snapshot = await deleteDoc(doc(firestore, 'timers', id));
+
+          return { data: snapshot };
+        } catch (error: any) {
+          console.error(error.message);
+          return { error: error.message };
+        }
+      },
+      invalidatesTags: ['Timer'],
+    }),
   }),
 });
 
@@ -84,4 +98,5 @@ export const {
   useFetchTimerByIdQuery,
   useAddTimerMutation,
   useUpdateTimerMutation,
+  useDeleteTimerMutation,
 } = firestoreApi;

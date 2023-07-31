@@ -9,7 +9,7 @@ const Timer = () => {
   const [isModalvisible, setIsModalVisible] = useState(false);
   const { data: allTimers, isLoading } = useFetchTimersQuery();
   const [addTimer] = useAddTimerMutation();
-  const { startCount } = useTimer();
+  const { startCount, startTimer } = useTimer();
 
   const onAddNewTimer = () => {
     setIsModalVisible(true);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export const useTimer = () => {
   const [hasTimerStarted, setHasTimerStarted] = useState(false);
@@ -6,40 +6,45 @@ export const useTimer = () => {
   const [timerInterval, setTimerInterval] = useState(0);
 
   const startTimer = () => {
-    if (hasTimerStarted) {
-      console.log('Timer has already started');
-      return;
-    }
-
-    if (startCount === 0) {
-      const interval = window.setInterval(() => {
-        setStartCount((count) => count + 1);
+    const interval = window.setInterval(() => {
+      setStartCount((count) => {
+        return count + 1;
       });
-      setTimerInterval(interval);
-      setHasTimerStarted(true);
+    });
 
-      return;
-    }
+    setTimerInterval(interval);
+    setHasTimerStarted(true);
   };
 
   const pauseTimer = () => {
     clearInterval(timerInterval);
   };
 
-  const continueTimer = (timer: number) => {
+  const continueTimer = () => {
+    setHasTimerStarted(true);
     const interval = window.setInterval(() => {
       setStartCount((count) => {
         return count + 1;
       });
     });
+    // @ts-ignore
     setTimerInterval(interval);
   };
 
   const stopTimer = () => {
     clearInterval(timerInterval);
+    setHasTimerStarted(false);
   };
 
-  return { startTimer, startCount, stopTimer, pauseTimer, continueTimer };
+  return {
+    startTimer,
+    startCount,
+    stopTimer,
+    pauseTimer,
+    continueTimer,
+    setStartCount,
+    hasTimerStarted,
+  };
 };
 
 export default useTimer;

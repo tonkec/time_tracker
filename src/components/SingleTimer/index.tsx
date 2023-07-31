@@ -1,8 +1,8 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import useTimer from '../../hooks/useTimer';
 import {
   useUpdateTimerMutation,
-  useFetchTimerByIdQuery,
+  useDeleteTimerMutation,
 } from '../../slices/slices';
 
 type SingleTimerType = {
@@ -14,8 +14,21 @@ type SingleTimerType = {
 const SingleTimer = ({ id, description, timer }: SingleTimerType) => {
   const [newDescription, setNewDescription] = useState(description);
   const [updateTimer] = useUpdateTimerMutation();
+  const [deleteTimer] = useDeleteTimerMutation();
 
-  const { stopTimer, pauseTimer, continueTimer, startCount } = useTimer();
+  const {
+    stopTimer,
+    pauseTimer,
+    continueTimer,
+    startCount,
+    setStartCount,
+    startTimer,
+    hasTimerStarted,
+  } = useTimer();
+
+  const onStartTimer = () => {
+    startTimer();
+  };
 
   const onStopTimer = (e: FormEvent) => {
     e.preventDefault();
@@ -37,8 +50,16 @@ const SingleTimer = ({ id, description, timer }: SingleTimerType) => {
   };
 
   const onContinueTimer = () => {
-    continueTimer(timer);
+    continueTimer();
   };
+
+  const onDeleteTimer = () => {
+    deleteTimer(id);
+  };
+
+  useEffect(() => {
+    setStartCount(timer);
+  }, [setStartCount, timer]);
 
   return (
     <div>
@@ -51,10 +72,14 @@ const SingleTimer = ({ id, description, timer }: SingleTimerType) => {
         onChange={(e) => setNewDescription(e.target.value)}
         value={newDescription}
       />
-
-      <button onClick={onStopTimer}>Stop timer</button>
+      {hasTimerStarted ? (
+        <button onClick={onStopTimer}>Stop timer</button>
+      ) : (
+        <button onClick={onStartTimer}>Start timer</button>
+      )}
       <button onClick={onPauseTimer}>Pause timer</button>
       <button onClick={onContinueTimer}>Continue timer</button>
+      <button onClick={onDeleteTimer}>Delete timer</button>
     </div>
   );
 };
