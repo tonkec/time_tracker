@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import handleSubmit from '../handles';
 
 export const useTimer = () => {
   const [hasTimerStarted, setHasTimerStarted] = useState(false);
@@ -45,8 +44,6 @@ export const useTimer = () => {
     // const formattedDate = new Date(startCount * 1000)
     //   .toISOString()
     //   .slice(11, -1);
-
-    handleSubmit(startCount);
   };
 
   return { startTimer, startCount, stopTimer, pauseTimer, continueTimer };

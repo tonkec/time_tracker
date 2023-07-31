@@ -1,7 +1,7 @@
 import { useAuth } from '../../hooks/useAuth';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
-import Timer from '../../components/Timer';
+import Timer from '../../components/Timers';
 
 const Dashboard = () => {
   const { logout } = useAuth();
