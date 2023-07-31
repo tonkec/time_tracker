@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { useFetchTimersQuery, useAddTimerMutation } from '../../slices/slices';
+import {
+  useFetchTimersQuery,
+  useAddTimerMutation,
+  useUpdateTimerMutation,
+} from '../../slices/slices';
 import SingleTimer from '../SingleTimer';
 import { Dialog } from 'primereact/dialog';
 import useTimer from '../../hooks/useTimer';
@@ -9,7 +13,7 @@ const Timer = () => {
   const [isModalvisible, setIsModalVisible] = useState(false);
   const { data: allTimers, isLoading } = useFetchTimersQuery();
   const [addTimer] = useAddTimerMutation();
-  const { startCount, startTimer } = useTimer();
+  const { startCount, timerInterval } = useTimer();
 
   const onAddNewTimer = () => {
     setIsModalVisible(true);
@@ -21,8 +25,17 @@ const Timer = () => {
       description: newTimerDescription,
       createdAt: today,
       timer: startCount,
+      intervalId: timerInterval,
     });
     setIsModalVisible(false);
+  };
+
+  const onStopAllTimers = () => {
+    allTimers.forEach(
+      (timer: { intervalId: { current: number }; id: string }) => {
+        return clearInterval(timer.intervalId.current);
+      }
+    );
   };
 
   return (
@@ -43,6 +56,7 @@ const Timer = () => {
           <button onClick={onSaveTimer}>Save timer</button>
         </Dialog>
       </div>
+      <button onClick={onStopAllTimers}>Stop all timers</button>
       <button onClick={onAddNewTimer}>Add new timer</button>
       {!isLoading &&
         allTimers.map((t: any) => (

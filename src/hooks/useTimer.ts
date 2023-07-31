@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 export const useTimer = () => {
   const [hasTimerStarted, setHasTimerStarted] = useState(false);
   const [startCount, setStartCount] = useState(0);
-  const [timerInterval, setTimerInterval] = useState(0);
+  let timerInterval = useRef(0);
 
   const startTimer = () => {
     const interval = window.setInterval(() => {
@@ -12,12 +12,12 @@ export const useTimer = () => {
       });
     });
 
-    setTimerInterval(interval);
+    timerInterval.current = interval;
     setHasTimerStarted(true);
   };
 
   const pauseTimer = () => {
-    clearInterval(timerInterval);
+    clearInterval(timerInterval.current);
   };
 
   const continueTimer = () => {
@@ -27,12 +27,12 @@ export const useTimer = () => {
         return count + 1;
       });
     });
-    // @ts-ignore
-    setTimerInterval(interval);
+
+    timerInterval.current = interval;
   };
 
   const stopTimer = () => {
-    clearInterval(timerInterval);
+    clearInterval(timerInterval.current);
     setHasTimerStarted(false);
   };
 
@@ -44,6 +44,7 @@ export const useTimer = () => {
     continueTimer,
     setStartCount,
     hasTimerStarted,
+    timerInterval,
   };
 };
 

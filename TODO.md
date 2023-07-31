@@ -1,16 +1,21 @@
-## Layout
+## Layout => 02.08
 
-Everything
+- Tema
+  - styled components?
+- Login screen prvo
+- Navbar
+- Table
+- Buttons
 
 ## CRUD
 
-Click on start new timer? pops up modal with description input field?
-delete timer
-stop all timers
+stop all timers => 31.07
 
 ## Ostalo
 
-paginacija
+paginacija => 1.08
 
-- history page
-  - filtriranje
+- history page => 1.08
+  - filtriranje => 1.08
+
+# Testiranje

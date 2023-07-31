@@ -24,10 +24,17 @@ const SingleTimer = ({ id, description, timer }: SingleTimerType) => {
     setStartCount,
     startTimer,
     hasTimerStarted,
+    timerInterval,
   } = useTimer();
 
   const onStartTimer = () => {
     startTimer();
+    updateTimer({
+      id,
+      timer: startCount,
+      description: newDescription,
+      intervalId: timerInterval,
+    });
   };
 
   const onStopTimer = (e: FormEvent) => {
@@ -37,6 +44,7 @@ const SingleTimer = ({ id, description, timer }: SingleTimerType) => {
       id,
       timer: startCount,
       description: newDescription,
+      intervalId: timerInterval,
     });
   };
 
@@ -46,15 +54,18 @@ const SingleTimer = ({ id, description, timer }: SingleTimerType) => {
       id,
       timer: startCount,
       description: newDescription,
+      intervalId: timerInterval,
     });
   };
 
   const onContinueTimer = () => {
     continueTimer();
-  };
-
-  const onDeleteTimer = () => {
-    deleteTimer(id);
+    updateTimer({
+      id,
+      timer: startCount,
+      description: newDescription,
+      intervalId: timerInterval,
+    });
   };
 
   useEffect(() => {
@@ -79,7 +90,7 @@ const SingleTimer = ({ id, description, timer }: SingleTimerType) => {
       )}
       <button onClick={onPauseTimer}>Pause timer</button>
       <button onClick={onContinueTimer}>Continue timer</button>
-      <button onClick={onDeleteTimer}>Delete timer</button>
+      <button onClick={() => deleteTimer(id)}>Delete timer</button>
     </div>
   );
 };

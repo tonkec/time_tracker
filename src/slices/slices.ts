@@ -44,13 +44,14 @@ export const firestoreApi = createApi({
       providesTags: ['Timer'],
     }),
     addTimer: builder.mutation<any, any>({
-      async queryFn({ description, timer, createdAt }) {
+      async queryFn({ description, timer, createdAt, intervalId }) {
         try {
           const ref = collection(firestore, 'timers');
           const snapshot = await addDoc(ref, {
             description,
             timer,
             createdAt,
+            intervalId,
           });
 
           return { data: snapshot.id };
@@ -62,11 +63,12 @@ export const firestoreApi = createApi({
       invalidatesTags: ['Timer'],
     }),
     updateTimer: builder.mutation<any, any>({
-      async queryFn({ id, timer, description }) {
+      async queryFn({ id, timer, description, intervalId }) {
         try {
           const snapshot = await updateDoc(doc(firestore, 'timers', id), {
             timer,
             description,
+            intervalId,
           });
 
           return { data: snapshot };
