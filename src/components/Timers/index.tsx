@@ -31,11 +31,10 @@ const Timer = () => {
   };
 
   const onStopAllTimers = () => {
-    allTimers.forEach(
-      (timer: { intervalId: { current: number }; id: string }) => {
-        return clearInterval(timer.intervalId.current);
-      }
-    );
+    console.log(timerInterval, 'timer INterval on all');
+    allTimers.forEach((timer: { intervalId: number; id: string }) => {
+      return clearInterval(timer.intervalId);
+    });
   };
 
   return (
