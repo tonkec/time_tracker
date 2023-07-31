@@ -1,6 +1,9 @@
 import { FormEvent, useState } from 'react';
 import useTimer from '../../hooks/useTimer';
-import { useUpdateTimerMutation } from '../../slices/slices';
+import {
+  useUpdateTimerMutation,
+  useFetchTimerByIdQuery,
+} from '../../slices/slices';
 
 type SingleTimerType = {
   id: string;
@@ -9,27 +12,38 @@ type SingleTimerType = {
 };
 
 const SingleTimer = ({ id, description, timer }: SingleTimerType) => {
-  const [newDescription, setNewDescription] = useState('');
+  const [newDescription, setNewDescription] = useState(description);
   const [updateTimer] = useUpdateTimerMutation();
 
-  const { startTimer, stopTimer, pauseTimer, continueTimer, startCount } =
-    useTimer();
-
-  const onStartTimer = (e: FormEvent) => {
-    e.preventDefault();
-    startTimer();
-  };
+  const { stopTimer, pauseTimer, continueTimer, startCount } = useTimer();
 
   const onStopTimer = (e: FormEvent) => {
     e.preventDefault();
     stopTimer();
-    updateTimer({ id, timer: startCount, description: newDescription });
+    updateTimer({
+      id,
+      timer: startCount,
+      description: newDescription,
+    });
+  };
+
+  const onPauseTimer = () => {
+    pauseTimer();
+    updateTimer({
+      id,
+      timer: startCount,
+      description: newDescription,
+    });
+  };
+
+  const onContinueTimer = () => {
+    continueTimer(timer);
   };
 
   return (
     <div>
       <h1>
-        {timer} | {description}
+        {startCount > 0 ? startCount : timer} | {description}
       </h1>
       <input
         type="text"
@@ -37,10 +51,10 @@ const SingleTimer = ({ id, description, timer }: SingleTimerType) => {
         onChange={(e) => setNewDescription(e.target.value)}
         value={newDescription}
       />
-      <button onClick={onStartTimer}>Start new timer</button>
+
       <button onClick={onStopTimer}>Stop timer</button>
-      <button onClick={pauseTimer}>Pause timer</button>
-      <button onClick={continueTimer}>Continue timer</button>
+      <button onClick={onPauseTimer}>Pause timer</button>
+      <button onClick={onContinueTimer}>Continue timer</button>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import TimeTrackingRoutes from './routes';
 
 function App() {

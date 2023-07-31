@@ -23,27 +23,20 @@ export const useTimer = () => {
   };
 
   const pauseTimer = () => {
-    if (hasTimerStarted) {
-      clearInterval(timerInterval);
-    }
+    clearInterval(timerInterval);
   };
 
-  const continueTimer = () => {
-    if (hasTimerStarted) {
-      const interval = window.setInterval(() => {
-        setStartCount((count) => count + 1);
+  const continueTimer = (timer: number) => {
+    const interval = window.setInterval(() => {
+      setStartCount((count) => {
+        return count + 1;
       });
-      setTimerInterval(interval);
-    }
+    });
+    setTimerInterval(interval);
   };
 
   const stopTimer = () => {
-    if (hasTimerStarted) {
-      clearInterval(timerInterval);
-    }
-    // const formattedDate = new Date(startCount * 1000)
-    //   .toISOString()
-    //   .slice(11, -1);
+    clearInterval(timerInterval);
   };
 
   return { startTimer, startCount, stopTimer, pauseTimer, continueTimer };

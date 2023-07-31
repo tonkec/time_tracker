@@ -43,10 +43,14 @@ export const firestoreApi = createApi({
       providesTags: ['Timer'],
     }),
     addTimer: builder.mutation<any, any>({
-      async queryFn(data) {
+      async queryFn({ description, timer, createdAt }) {
         try {
           const ref = collection(firestore, 'timers');
-          const snapshot = await addDoc(ref, data);
+          const snapshot = await addDoc(ref, {
+            description,
+            timer,
+            createdAt,
+          });
 
           return { data: snapshot.id };
         } catch (error: any) {

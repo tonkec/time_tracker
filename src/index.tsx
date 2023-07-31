@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './slices';
 import { Provider } from 'react-redux';
+import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <PrimeReactProvider>
+        <App />
+      </PrimeReactProvider>
     </Provider>
   </React.StrictMode>
 );
