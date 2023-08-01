@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import Links from './Links';
-
+import Navbar from '../../Navbar';
+import { useAuth } from '../../../hooks/useAuth';
 const AuthLayout = ({
   children,
   componentType,
@@ -8,14 +9,19 @@ const AuthLayout = ({
   children: ReactNode;
   componentType: string;
 }) => {
-  return (
-    <div className="h-screen flex align-items-center justify-content-center flex-column">
-      <div className="text-center w-3 font-bold block mb-4 bg-gray-500 border-round-md">
-        {children}
-      </div>
+  const { user } = useAuth();
 
-      <Links componentType={componentType} />
-    </div>
+  return (
+    <>
+      <Navbar isAuthenticated={!!user} />
+      <div className="h-screen flex align-items-center justify-content-center flex-column">
+        <div className="text-center w-3 font-bold block mb-4 bg-gray-500 border-round-md">
+          {children}
+        </div>
+
+        <Links componentType={componentType} />
+      </div>
+    </>
   );
 };
 

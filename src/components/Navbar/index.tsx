@@ -37,17 +37,19 @@ const Navbar = ({ isAuthenticated }: NavbarType) => {
       ),
     },
     {
-      template: () => (
-        <span>
-          Logout{' '}
-          <ReactSVG
-            beforeInjection={(svg) => {
-              svg.classList.add('svg-icon');
-            }}
-            src={quit}
-          />
-        </span>
-      ),
+      template: () => {
+        return isAuthenticated ? (
+          <span>
+            Logout{' '}
+            <ReactSVG
+              beforeInjection={(svg) => {
+                svg.classList.add('svg-icon');
+              }}
+              src={quit}
+            />
+          </span>
+        ) : null;
+      },
     },
   ];
 
