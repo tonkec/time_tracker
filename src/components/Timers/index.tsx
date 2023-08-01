@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import {
-  useFetchTimersQuery,
-  useAddTimerMutation,
-  useUpdateTimerMutation,
-} from '../../slices/slices';
+import { useFetchTimersQuery, useAddTimerMutation } from '../../slices/slices';
 import SingleTimer from '../SingleTimer';
 import { Dialog } from 'primereact/dialog';
 import useTimer from '../../hooks/useTimer';
+import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
 
 const Timer = () => {
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(5);
   const [newTimerDescription, setNewTimerDescription] = useState('');
   const [isModalvisible, setIsModalVisible] = useState(false);
   const { data: allTimers, isLoading } = useFetchTimersQuery();
@@ -31,10 +30,16 @@ const Timer = () => {
   };
 
   const onStopAllTimers = () => {
-    console.log(timerInterval, 'timer INterval on all');
-    allTimers.forEach((timer: { intervalId: number; id: string }) => {
-      return clearInterval(timer.intervalId);
-    });
+    allTimers.forEach(
+      (timer: { intervalId: { current: number }; id: string }) => {
+        return clearInterval(timer.intervalId.current);
+      }
+    );
+  };
+
+  const onPageChange = (event: PaginatorPageChangeEvent) => {
+    setFirst(event.first);
+    setRows(event.rows);
   };
 
   return (
@@ -57,15 +62,30 @@ const Timer = () => {
       </div>
       <button onClick={onStopAllTimers}>Stop all timers</button>
       <button onClick={onAddNewTimer}>Add new timer</button>
-      {!isLoading &&
-        allTimers.map((t: any) => (
-          <SingleTimer
-            key={t.id}
-            description={t.description}
-            id={t.id}
-            timer={t.timer}
+
+      <div className="card">
+        {!isLoading &&
+          allTimers
+            .slice(first, first + rows)
+            .map((t: any) => (
+              <SingleTimer
+                key={t.id}
+                description={t.description}
+                id={t.id}
+                timer={t.timer}
+              />
+            ))}
+
+        {!isLoading && (
+          <Paginator
+            first={first}
+            rows={rows}
+            totalRecords={allTimers.length}
+            onPageChange={onPageChange}
+            template="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
           />
-        ))}
+        )}
+      </div>
     </div>
   );
 };

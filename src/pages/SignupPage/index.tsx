@@ -2,6 +2,9 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useAuth } from '../../hooks/useAuth';
+import AuthLayout from '../../components/Layout/AuthLayout';
+import { Form, MyInputText } from './SignupPage.styles';
+import { Button } from 'primereact/button';
 
 const SignupPage = () => {
   const { login } = useAuth();
@@ -29,25 +32,26 @@ const SignupPage = () => {
       });
   };
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        type="email"
-        value={email}
-        onChange={handleChange(setEmail)}
-        required
-        placeholder="Email address"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={handleChange(setPassword)}
-        required
-        placeholder="Password"
-      />
-      <button type="submit" onClick={onSubmit}>
-        Sign up
-      </button>
-    </form>
+    <AuthLayout componentType="signup">
+      <Form onSubmit={onSubmit}>
+        <h1 style={{ marginBottom: 60, marginTop: 40 }}>Signup</h1>
+        <MyInputText
+          type="email"
+          value={email}
+          onChange={handleChange(setEmail)}
+          required
+          placeholder="Email"
+        />
+        <MyInputText
+          type="password"
+          value={password}
+          onChange={handleChange(setPassword)}
+          required
+          placeholder="Password"
+        />
+        <Button severity="secondary" style={{ width: '100%' }} label="Signup" />
+      </Form>
+    </AuthLayout>
   );
 };
 

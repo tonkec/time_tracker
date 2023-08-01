@@ -4,6 +4,7 @@ import LoginPage from '../pages/LoginPage';
 import Dashboard from '../pages/Dashboard';
 import { ProtectedRoute } from './ProtectedRoute';
 import { AuthProvider } from '../context/AuthProvider';
+import HistoryPage from '../pages/HistoryPage';
 
 const TimeTrackingRoutes = () => {
   return (
@@ -17,6 +18,15 @@ const TimeTrackingRoutes = () => {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/history"
+            element={
+              <ProtectedRoute>
+                <HistoryPage />
               </ProtectedRoute>
             }
           />

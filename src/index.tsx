@@ -4,7 +4,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './slices';
 import { Provider } from 'react-redux';
-import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
+import { PrimeReactProvider } from 'primereact/api';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

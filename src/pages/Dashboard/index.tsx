@@ -2,6 +2,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import Timer from '../../components/Timers';
+import Layout from '../../components/Layout';
 
 const Dashboard = () => {
   const { logout } = useAuth();
@@ -18,11 +19,11 @@ const Dashboard = () => {
   };
 
   return (
-    <>
+    <Layout>
       <h1>Dashboard</h1>
       <button onClick={onClick}>Log out</button>
       <Timer />
-    </>
+    </Layout>
   );
 };
 

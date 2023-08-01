@@ -1,4 +1,3 @@
-// src/features/scores/scoresSlice.ts
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   collection,

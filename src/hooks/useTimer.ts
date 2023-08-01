@@ -1,20 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 export const useTimer = () => {
   const [hasTimerStarted, setHasTimerStarted] = useState(false);
   const [startCount, setStartCount] = useState(0);
-  const [timerInterval, setTimerInterval] = useState('potato');
+  let timerInterval = useRef(0);
 
   const startTimer = () => {
-    // console.log(startCount);
-    // console.log(interval, 'startTimer inteval hook');
-    // @ts-ignore
+    const interval = window.setInterval(() => {
+      setStartCount((count) => {
+        return count + 1;
+      });
+    });
 
+    timerInterval.current = interval;
     setHasTimerStarted(true);
   };
 
   const pauseTimer = () => {
-    clearInterval(timerInterval);
+    clearInterval(timerInterval.current);
   };
 
   const continueTimer = () => {
@@ -24,27 +27,14 @@ export const useTimer = () => {
         return count + 1;
       });
     });
-    // @ts-ignore
-    setTimerInterval(interval);
+
+    timerInterval.current = interval;
   };
 
   const stopTimer = () => {
-    console.log(timerInterval, 'ti on stop timer');
-    clearInterval(timerInterval);
+    clearInterval(timerInterval.current);
     setHasTimerStarted(false);
   };
-
-  useEffect(() => {
-    if (hasTimerStarted) {
-      const interval = window.setInterval(() => {
-        setStartCount((count) => {
-          return count + 1;
-        });
-      });
-      // @ts-ignore
-      setTimerInterval(interval);
-    }
-  }, [startCount, hasTimerStarted]);
 
   return {
     startTimer,

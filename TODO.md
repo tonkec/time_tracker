@@ -7,15 +7,17 @@
 - Table
 - Buttons
 
-## CRUD
-
-stop all timers => 31.07
-
 ## Ostalo
 
-paginacija => 1.08
-
 - history page => 1.08
+
   - filtriranje => 1.08
 
+- what about bearer token?
+
 # Testiranje
+
+# Extra
+
+- https://primereact.org/messages/ => dodat toast message
+- loaderi
