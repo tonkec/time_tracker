@@ -21,6 +21,8 @@ export const ActionTemplate = ({
 }) => {
   const [updateTimer] = useUpdateTimerMutation();
   const [deleteTimer] = useDeleteTimerMutation();
+  const [startingPoint, setStartingPoint] = useState(0);
+  const [currentNode, setCurrentNode] = useState(null);
 
   const {
     stopTimer,
@@ -30,55 +32,68 @@ export const ActionTemplate = ({
     startTimer,
     hasTimerStarted,
     timerInterval,
-  } = useTimer();
+  } = useTimer({ startFrom: startingPoint });
 
   const onStartTimer = () => {
-    let newNodes = JSON.parse(JSON.stringify(nodes));
-    let editedNode = findNodeByKey(newNodes, options.node.key);
-    console.log(editedNode);
-    // startTimer();
+    startTimer();
 
-    // updateTimer({
-    //   id,
-    //   timer: startCount,
-    //   description: newDescription,
-    //   intervalId: timerInterval,
-    // });
+    if (currentNode) {
+      const { data } = currentNode;
+      updateTimer({
+        //@ts-ignore
+        id: data.id,
+        timer: startCount,
+        //@ts-ignore
+        description: data.description,
+        intervalId: timerInterval,
+      });
+    }
   };
 
   const onStopTimer = (e: FormEvent) => {
     e.preventDefault();
     stopTimer();
-    // updateTimer({
-    //   id,
-    //   timer: startCount,
-    //   description: newDescription,
-    //   intervalId: timerInterval,
-    // });
+    if (currentNode) {
+      const { data } = currentNode;
+      updateTimer({
+        //@ts-ignore
+        id: data.id,
+        timer: startCount,
+        //@ts-ignore
+        description: data.description,
+        intervalId: timerInterval,
+      });
+    }
   };
 
   const onPauseTimer = () => {
     pauseTimer();
-    // updateTimer({
-    //   id,
-    //   timer: startCount,
-    //   description: newDescription,
-    //   intervalId: timerInterval,
-    // });
   };
 
   const onContinueTimer = () => {
     continueTimer();
-    // updateTimer({
-    //   id,
-    //   timer: startCount,
-    //   description: newDescription,
-    //   intervalId: timerInterval,
-    // });
   };
+
+  useEffect(() => {
+    let newNodes = JSON.parse(JSON.stringify(nodes));
+    let editedNode = findNodeByKey(newNodes, options.node.key);
+    setCurrentNode(editedNode);
+  }, [nodes]);
+
+  useEffect(() => {
+    if (currentNode) {
+      const { data } = currentNode;
+      //@ts-ignore
+      if (data.timer > 0) {
+        //@ts-ignore
+        setStartingPoint(data.timer);
+      }
+    }
+  }, [currentNode, startingPoint]);
+
   return (
     <div>
-      <h1>{startCount > 0 ? startCount : timerInterval.current}</h1>
+      <h1>{startCount}</h1>
 
       {hasTimerStarted ? (
         <button onClick={onStopTimer}>Stop timer</button>

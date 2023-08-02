@@ -25,10 +25,10 @@ const SingleTimer = ({ id, description, timer }: SingleTimerType) => {
     startTimer,
     hasTimerStarted,
     timerInterval,
-  } = useTimer();
+  } = useTimer({ startFrom: 0 });
 
   const onStartTimer = () => {
-    startTimer();
+    // startTimer();
     updateTimer({
       id,
       timer: startCount,

@@ -13,7 +13,7 @@ const Timer = () => {
   const [isModalvisible, setIsModalVisible] = useState(false);
   const { data: allTimers, isLoading } = useFetchTimersQuery();
   const [addTimer] = useAddTimerMutation();
-  const { startCount, timerInterval } = useTimer();
+  const { startCount, timerInterval } = useTimer({ startFrom: 0 });
 
   const onAddNewTimer = () => {
     setIsModalVisible(true);
@@ -49,7 +49,7 @@ const Timer = () => {
             description: timer.description,
             timer: timer.timer,
             createdAt: timer.createdAt,
-            intervalId: timer.intervalId.current,
+            id: timer.id,
           },
         };
 
@@ -85,7 +85,7 @@ const Timer = () => {
           <TreeTable value={tableNodes} tableStyle={{ minWidth: '50rem' }}>
             <Column field="description" header="Description" expander></Column>
             <Column field="timer" header="Timer"></Column>
-            <Column field="intervalId" header="intervalId"></Column>
+            <Column field="createdAt" header="Created at"></Column>
             <Column
               header="Actions"
               editor={(options) => (
