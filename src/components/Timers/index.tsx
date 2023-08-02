@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useFetchTimersQuery, useAddTimerMutation } from '../../slices/slices';
 import SingleTimer from '../SingleTimer';
 import { Dialog } from 'primereact/dialog';
 import useTimer from '../../hooks/useTimer';
-import { Paginator, PaginatorPageChangeEvent } from 'primereact/paginator';
+import { TreeTable } from 'primereact/treetable';
+import { Column } from 'primereact/column';
+import { ActionTemplate } from './actionTemplate';
 
 const Timer = () => {
-  const [first, setFirst] = useState(0);
-  const [rows, setRows] = useState(5);
+  const [tableNodes, setTableNodes] = useState([]);
   const [newTimerDescription, setNewTimerDescription] = useState('');
   const [isModalvisible, setIsModalVisible] = useState(false);
   const { data: allTimers, isLoading } = useFetchTimersQuery();
@@ -37,10 +38,26 @@ const Timer = () => {
     );
   };
 
-  const onPageChange = (event: PaginatorPageChangeEvent) => {
-    setFirst(event.first);
-    setRows(event.rows);
-  };
+  useEffect(() => {
+    if (!isLoading) {
+      const arr: any = [];
+      allTimers.forEach((timer: any, index: number) => {
+        const obj = {
+          key: `${index}`,
+          label: 'label',
+          data: {
+            description: timer.description,
+            timer: timer.timer,
+            createdAt: timer.createdAt,
+            intervalId: timer.intervalId.current,
+          },
+        };
+
+        arr.push(obj);
+        setTableNodes(arr);
+      });
+    }
+  }, [allTimers, isLoading]);
 
   return (
     <div>
@@ -64,26 +81,18 @@ const Timer = () => {
       <button onClick={onAddNewTimer}>Add new timer</button>
 
       <div className="card">
-        {!isLoading &&
-          allTimers
-            .slice(first, first + rows)
-            .map((t: any) => (
-              <SingleTimer
-                key={t.id}
-                description={t.description}
-                id={t.id}
-                timer={t.timer}
-              />
-            ))}
-
         {!isLoading && (
-          <Paginator
-            first={first}
-            rows={rows}
-            totalRecords={allTimers.length}
-            onPageChange={onPageChange}
-            template="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-          />
+          <TreeTable value={tableNodes} tableStyle={{ minWidth: '50rem' }}>
+            <Column field="description" header="Description" expander></Column>
+            <Column field="timer" header="Timer"></Column>
+            <Column field="intervalId" header="intervalId"></Column>
+            <Column
+              header="Actions"
+              editor={(options) => (
+                <ActionTemplate nodes={tableNodes} options={options} />
+              )}
+            ></Column>
+          </TreeTable>
         )}
       </div>
     </div>
