@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useFetchTimersQuery, useAddTimerMutation } from '../../slices/slices';
-import SingleTimer from '../SingleTimer';
 import { Dialog } from 'primereact/dialog';
 import useTimer from '../../hooks/useTimer';
 import { TreeTable } from 'primereact/treetable';
 import { Column } from 'primereact/column';
 import { ActionTemplate } from './actionTemplate';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Timer = () => {
   const [tableNodes, setTableNodes] = useState([]);
@@ -14,6 +14,8 @@ const Timer = () => {
   const { data: allTimers, isLoading } = useFetchTimersQuery();
   const [addTimer] = useAddTimerMutation();
   const { startCount, timerInterval } = useTimer({ startFrom: 0 });
+  const state = useSelector((state: any) => state.counterSlice);
+  console.log(state);
 
   const onAddNewTimer = () => {
     setIsModalVisible(true);
@@ -77,6 +79,7 @@ const Timer = () => {
           <button onClick={onSaveTimer}>Save timer</button>
         </Dialog>
       </div>
+      <h1>{state.counter}</h1>
       <button onClick={onStopAllTimers}>Stop all timers</button>
       <button onClick={onAddNewTimer}>Add new timer</button>
 

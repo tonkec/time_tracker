@@ -35,10 +35,10 @@ export const ActionTemplate = ({
   } = useTimer({ startFrom: startingPoint });
 
   const onStartTimer = () => {
-    startTimer();
-
     if (currentNode) {
       const { data } = currentNode;
+      // @ts-ignore
+      startTimer(data.id);
       updateTimer({
         //@ts-ignore
         id: data.id,
@@ -78,7 +78,7 @@ export const ActionTemplate = ({
     let newNodes = JSON.parse(JSON.stringify(nodes));
     let editedNode = findNodeByKey(newNodes, options.node.key);
     setCurrentNode(editedNode);
-  }, [nodes]);
+  }, [nodes, options.node]);
 
   useEffect(() => {
     if (currentNode) {
@@ -93,8 +93,6 @@ export const ActionTemplate = ({
 
   return (
     <div>
-      <h1>{startCount}</h1>
-
       {hasTimerStarted ? (
         <button onClick={onStopTimer}>Stop timer</button>
       ) : (
@@ -102,7 +100,6 @@ export const ActionTemplate = ({
       )}
       <button onClick={onPauseTimer}>Pause timer</button>
       <button onClick={onContinueTimer}>Continue timer</button>
-      {/* <button onClick={() => deleteTimer(id)}>Delete timer</button> */}
     </div>
   );
 };

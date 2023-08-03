@@ -13,31 +13,7 @@ const HistoryPage = () => {
     setRows(event.rows);
   };
 
-  return (
-    <div className="card">
-      {!isLoading &&
-        allTimers
-          .slice(first, first + rows)
-          .map((t: any) => (
-            <SingleTimer
-              key={t.id}
-              description={t.description}
-              id={t.id}
-              timer={t.timer}
-            />
-          ))}
-
-      {!isLoading && (
-        <Paginator
-          first={first}
-          rows={rows}
-          totalRecords={allTimers.length}
-          onPageChange={onPageChange}
-          template="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        />
-      )}
-    </div>
-  );
+  return <h2>History</h2>;
 };
 
 export default HistoryPage;

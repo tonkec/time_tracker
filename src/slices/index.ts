@@ -1,9 +1,11 @@
 import { firestoreApi } from './slices';
 import { configureStore } from '@reduxjs/toolkit';
+import counterSlice from './counterSlice';
 
 export const store = configureStore({
   reducer: {
     [firestoreApi.reducerPath]: firestoreApi.reducer,
+    counterSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(firestoreApi.middleware),
