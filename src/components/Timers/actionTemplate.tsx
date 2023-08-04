@@ -76,9 +76,9 @@ export const ActionTemplate = ({
 
   useEffect(() => {
     let newNodes = JSON.parse(JSON.stringify(nodes));
-    let editedNode = findNodeByKey(newNodes, options.node.key);
+    let editedNode = findNodeByKey(newNodes, options.key);
     setCurrentNode(editedNode);
-  }, [nodes, options.node]);
+  }, [nodes, options.key]);
 
   useEffect(() => {
     if (currentNode) {

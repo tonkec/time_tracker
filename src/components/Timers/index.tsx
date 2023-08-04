@@ -107,7 +107,7 @@ const Timer = () => {
             <Column field="createdAt" header="Created at"></Column>
             <Column
               header="Actions"
-              editor={(options) => (
+              body={(options) => (
                 <ActionTemplate nodes={tableNodes} options={options} />
               )}
             ></Column>
