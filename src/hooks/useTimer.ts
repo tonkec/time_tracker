@@ -10,6 +10,7 @@ export const useTimer = ({ startFrom }: { startFrom: number }) => {
   const dispatch = useDispatch();
 
   const startTimer = (id: string) => {
+    console.log('start timer');
     setStartCount(startFrom);
     setTimerId(id);
     const interval = window.setInterval(() => {

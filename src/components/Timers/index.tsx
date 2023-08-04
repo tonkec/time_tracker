@@ -47,24 +47,33 @@ const Timers = ({ hasFilter }: { hasFilter: boolean }) => {
           label: 'label',
           data: {
             description: timer.description,
-            timer: state.counter,
+            timer: timer.timer,
             createdAt: timer.createdAt,
             id: timer.id,
             intervalId: timer.intervalId,
           },
         };
 
-        if (state.timerId === timer.id) {
-          obj.data.timer = state.counter;
-        } else {
-          obj.data.timer = timer.timer;
-        }
-
         arr.push(obj);
         setTableNodes(arr);
       });
     }
-  }, [allTimers, isLoading, state.counter, state.timerId]);
+  }, [allTimers, isLoading, state.timerId]);
+
+  useEffect(() => {
+    if (tableNodes.length > 0) {
+      const currentTimer = allTimers.filter(
+        (timer: Timer) => timer.id === state.timerId
+      );
+      currentTimer.counter = state.counter;
+
+      tableNodes.forEach((tableNode: TableNode) => {
+        if (tableNode.data.id === state.timerId) {
+          tableNode.data.timer = state.counter;
+        }
+      });
+    }
+  }, [state.counter, allTimers, state.timerId, tableNodes]);
 
   const renderTable = () => {
     if (hasFilter) {

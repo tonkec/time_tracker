@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import useTimer from '../../hooks/useTimer';
 import {
   useUpdateTimerMutation,
@@ -16,8 +16,13 @@ export const ActionTemplate = ({
 }) => {
   const [updateTimer] = useUpdateTimerMutation();
   const [deleteTimer] = useDeleteTimerMutation();
-  const [startingPoint, setStartingPoint] = useState(0);
-  const [currentNode, setCurrentNode] = useState<TableNode>();
+  let newNodes = JSON.parse(JSON.stringify(nodes));
+  let editedNode = findNodeByKey(newNodes, options.key);
+  const { data } = editedNode;
+  let startingPoint = 0;
+  if (data.timer > 0) {
+    startingPoint = data.timer;
+  }
 
   const {
     stopTimer,
@@ -30,8 +35,8 @@ export const ActionTemplate = ({
   } = useTimer({ startFrom: startingPoint });
 
   const onStartTimer = () => {
-    if (currentNode) {
-      const { data } = currentNode;
+    if (editedNode) {
+      const { data } = editedNode;
 
       startTimer(data.id);
       updateTimer({
@@ -45,8 +50,8 @@ export const ActionTemplate = ({
 
   const onStopTimer = () => {
     stopTimer();
-    if (currentNode) {
-      const { data } = currentNode;
+    if (editedNode) {
+      const { data } = editedNode;
       updateTimer({
         id: data.id,
         timer: startCount,
@@ -57,8 +62,8 @@ export const ActionTemplate = ({
   };
 
   const onDeleteTimer = () => {
-    if (currentNode) {
-      const { data } = currentNode;
+    if (editedNode) {
+      const { data } = editedNode;
       deleteTimer(data.id);
     }
   };
@@ -70,21 +75,6 @@ export const ActionTemplate = ({
   const onContinueTimer = () => {
     continueTimer();
   };
-
-  useEffect(() => {
-    let newNodes = JSON.parse(JSON.stringify(nodes));
-    let editedNode = findNodeByKey(newNodes, options.key);
-    setCurrentNode(editedNode);
-  }, [nodes, options.key]);
-
-  useEffect(() => {
-    if (currentNode) {
-      const { data } = currentNode;
-      if (data.timer > 0) {
-        setStartingPoint(data.timer);
-      }
-    }
-  }, [currentNode, startingPoint]);
 
   return (
     <>
