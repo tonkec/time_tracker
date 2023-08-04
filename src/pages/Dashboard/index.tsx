@@ -22,7 +22,7 @@ const Dashboard = () => {
     <Layout>
       <h1>Dashboard</h1>
       <button onClick={onClick}>Log out</button>
-      <Timer />
+      <Timer hasFilter={false} />
     </Layout>
   );
 };

@@ -1,19 +1,12 @@
-import { useState, useEffect, FormEvent } from 'react';
-import {
-  useFetchTimersQuery,
-  useAddTimerMutation,
-  useUpdateTimerMutation,
-} from '../../slices/slices';
+import { useState, useEffect } from 'react';
+import { useFetchTimersQuery, useAddTimerMutation } from '../../slices/slices';
 import { Dialog } from 'primereact/dialog';
 import useTimer from '../../hooks/useTimer';
-import { TreeTable } from 'primereact/treetable';
-import { Column } from 'primereact/column';
-import { ActionTemplate } from './actionTemplate';
 import { useSelector } from 'react-redux';
+import TimersTable from './TimersTable';
+import FilterableTable from './FilterableTable';
 
-import EditorTemplate from './editorTemplate';
-
-const Timer = () => {
+const Timers = ({ hasFilter }: { hasFilter: boolean }) => {
   const [tableNodes, setTableNodes] = useState([]);
   const [newTimerDescription, setNewTimerDescription] = useState('');
   const [isModalvisible, setIsModalVisible] = useState(false);
@@ -73,6 +66,14 @@ const Timer = () => {
     }
   }, [allTimers, isLoading, state.counter, state.timerId]);
 
+  const renderTable = () => {
+    if (hasFilter) {
+      return <FilterableTable tableNodes={tableNodes} />;
+    }
+
+    return <TimersTable tableNodes={tableNodes} />;
+  };
+
   return (
     <div>
       <div className="card flex justify-content-center">
@@ -94,28 +95,9 @@ const Timer = () => {
       <button onClick={onStopAllTimers}>Stop all timers</button>
       <button onClick={onAddNewTimer}>Add new timer</button>
 
-      <div className="card">
-        {!isLoading && (
-          <TreeTable value={tableNodes} tableStyle={{ minWidth: '50rem' }}>
-            <Column
-              field="description"
-              body={(options) => (
-                <EditorTemplate tableNodes={tableNodes} options={options} />
-              )}
-            ></Column>
-            <Column field="timer" header="Timer"></Column>
-            <Column field="createdAt" header="Created at"></Column>
-            <Column
-              header="Actions"
-              body={(options) => (
-                <ActionTemplate nodes={tableNodes} options={options} />
-              )}
-            ></Column>
-          </TreeTable>
-        )}
-      </div>
+      <div className="card">{!isLoading && renderTable()}</div>
     </div>
   );
 };
 
-export default Timer;
+export default Timers;
