@@ -15,7 +15,6 @@ const Timer = () => {
   const [addTimer] = useAddTimerMutation();
   const { startCount, timerInterval } = useTimer({ startFrom: 0 });
   const state = useSelector((state: any) => state.counterSlice);
-  console.log(state);
 
   const onAddNewTimer = () => {
     setIsModalVisible(true);
@@ -44,22 +43,36 @@ const Timer = () => {
     if (!isLoading) {
       const arr: any = [];
       allTimers.forEach((timer: any, index: number) => {
-        const obj = {
-          key: `${index}`,
-          label: 'label',
-          data: {
-            description: timer.description,
-            timer: timer.timer,
-            createdAt: timer.createdAt,
-            id: timer.id,
-          },
-        };
+        let obj = {};
+        if (state.timerId === timer.id) {
+          obj = {
+            key: `${index}`,
+            label: 'label',
+            data: {
+              description: timer.description,
+              timer: state.counter,
+              createdAt: timer.createdAt,
+              id: timer.id,
+            },
+          };
+        } else {
+          obj = {
+            key: `${index}`,
+            label: 'label',
+            data: {
+              description: timer.description,
+              timer: timer.timer,
+              createdAt: timer.createdAt,
+              id: timer.id,
+            },
+          };
+        }
 
         arr.push(obj);
         setTableNodes(arr);
       });
     }
-  }, [allTimers, isLoading]);
+  }, [allTimers, isLoading, state.counter, state.timerId]);
 
   return (
     <div>
@@ -80,6 +93,7 @@ const Timer = () => {
         </Dialog>
       </div>
       <h1>{state.counter}</h1>
+      <h1>{state.timerId}</h1>
       <button onClick={onStopAllTimers}>Stop all timers</button>
       <button onClick={onAddNewTimer}>Add new timer</button>
 

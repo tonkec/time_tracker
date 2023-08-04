@@ -5,15 +5,16 @@ import { saveTimer } from '../slices/counterSlice';
 export const useTimer = ({ startFrom }: { startFrom: number }) => {
   const [hasTimerStarted, setHasTimerStarted] = useState(false);
   const [startCount, setStartCount] = useState(0);
+  const [timerId, setTimerId] = useState('');
   let timerInterval = useRef(0);
   const dispatch = useDispatch();
 
   const startTimer = (id: string) => {
     setStartCount(startFrom);
-    console.log(startCount, 'start count');
+    setTimerId(id);
     const interval = window.setInterval(() => {
       setStartCount((prevCount) => {
-        dispatch(saveTimer(prevCount + 1));
+        dispatch(saveTimer({ counter: prevCount + 1, timerId: id }));
         return prevCount + 1;
       });
     });
@@ -39,7 +40,7 @@ export const useTimer = ({ startFrom }: { startFrom: number }) => {
 
   const stopTimer = () => {
     clearInterval(timerInterval.current);
-    dispatch(saveTimer(startCount));
+    dispatch(saveTimer({ counter: startCount, timerId }));
     setHasTimerStarted(false);
   };
 

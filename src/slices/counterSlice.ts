@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState: { counter: number } = {
+const initialState: { counter: number; timerId: string } = {
   counter: 0,
+  timerId: '',
 };
 
 export const counterSlice = createSlice({
@@ -9,7 +10,8 @@ export const counterSlice = createSlice({
   initialState,
   reducers: {
     saveTimer: (state, action) => {
-      state.counter = action.payload;
+      state.counter = action.payload.counter;
+      state.timerId = action.payload.timerId;
     },
   },
 });
