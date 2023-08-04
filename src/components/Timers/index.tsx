@@ -5,15 +5,17 @@ import useTimer from '../../hooks/useTimer';
 import { useSelector } from 'react-redux';
 import TimersTable from './TimersTable';
 import FilterableTable from './FilterableTable';
+import { TableNode, Timer } from './types';
+import { stateType } from '../../slices/counterSlice';
 
 const Timers = ({ hasFilter }: { hasFilter: boolean }) => {
-  const [tableNodes, setTableNodes] = useState([]);
+  const [tableNodes, setTableNodes] = useState<TableNode[]>([]);
   const [newTimerDescription, setNewTimerDescription] = useState('');
   const [isModalvisible, setIsModalVisible] = useState(false);
   const { data: allTimers, isLoading } = useFetchTimersQuery();
   const [addTimer] = useAddTimerMutation();
   const { startCount, timerInterval } = useTimer({ startFrom: 0 });
-  const state = useSelector((state: any) => state.counterSlice);
+  const state = useSelector((state: stateType) => state.counterSlice);
 
   const onAddNewTimer = () => {
     setIsModalVisible(true);
@@ -31,17 +33,15 @@ const Timers = ({ hasFilter }: { hasFilter: boolean }) => {
   };
 
   const onStopAllTimers = () => {
-    allTimers.forEach(
-      (timer: { intervalId: { current: number }; id: string }) => {
-        return clearInterval(timer.intervalId.current);
-      }
-    );
+    allTimers.forEach((timer: Timer) => {
+      return clearInterval(timer.intervalId.current);
+    });
   };
 
   useEffect(() => {
     if (!isLoading) {
-      const arr: any = [];
-      allTimers.forEach((timer: any, index: number) => {
+      const arr: TableNode[] = [];
+      allTimers.forEach((timer: Timer, index: number) => {
         const obj = {
           key: `${index}`,
           label: 'label',

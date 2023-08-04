@@ -4,8 +4,9 @@ import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 import EditorTemplate from './editorTemplate';
 import { ActionTemplate } from './actionTemplate';
+import { TableNode } from './types';
 
-const FilterableTable = ({ tableNodes }: { tableNodes: any }) => {
+const FilterableTable = ({ tableNodes }: { tableNodes: TableNode[] }) => {
   const [globalFilter, setGlobalFilter] = useState('');
 
   const getHeader = () => {
@@ -36,6 +37,8 @@ const FilterableTable = ({ tableNodes }: { tableNodes: any }) => {
         header={header}
         filterMode="lenient"
         tableStyle={{ minWidth: '50rem' }}
+        paginator
+        rows={5}
       >
         <Column
           field="description"

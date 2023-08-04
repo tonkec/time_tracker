@@ -2,10 +2,16 @@ import { TreeTable } from 'primereact/treetable';
 import { Column } from 'primereact/column';
 import { ActionTemplate } from './actionTemplate';
 import EditorTemplate from './editorTemplate';
+import { TableNode } from './types';
 
-const TimersTable = ({ tableNodes }: { tableNodes: any }) => {
+const TimersTable = ({ tableNodes }: { tableNodes: TableNode[] }) => {
   return (
-    <TreeTable value={tableNodes} tableStyle={{ minWidth: '50rem' }}>
+    <TreeTable
+      value={tableNodes}
+      tableStyle={{ minWidth: '50rem' }}
+      paginator
+      rows={5}
+    >
       <Column
         field="description"
         body={(options) => (

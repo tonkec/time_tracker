@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState: { counter: number; timerId: string } = {
+type initialStateType = { counter: number; timerId: string };
+
+export type stateType = {
+  counterSlice: initialStateType;
+};
+
+const initialState: initialStateType = {
   counter: 0,
   timerId: '',
 };

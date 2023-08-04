@@ -1,25 +1,32 @@
 import { useState, useEffect, FormEvent } from 'react';
 import { findNodeByKey } from './helpers';
 import { useUpdateTimerMutation } from '../../slices/slices';
+import { TableNode } from './types';
+import { current } from '@reduxjs/toolkit';
+
 const EditorTemplate = ({
   tableNodes,
   options,
 }: {
-  tableNodes: any;
-  options: any;
+  tableNodes: TableNode[];
+  options: TableNode;
 }) => {
-  const [data, setTimerData] = useState<any>({});
+  const [currentNode, setCurrentNode] = useState<TableNode>();
+  const [newDescription, setNewDescription] = useState('');
   const [updateTimer] = useUpdateTimerMutation();
   const onDescriptionSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const dataToSave = data.editedNode.data;
-    updateTimer(dataToSave);
+    const dataToSave = currentNode?.data;
+    if (dataToSave) {
+      dataToSave.description = newDescription;
+      updateTimer(dataToSave);
+    }
   };
 
   useEffect(() => {
     const newNodes = JSON.parse(JSON.stringify(tableNodes));
     const editedNode = findNodeByKey(newNodes, options.key);
-    setTimerData(editedNode.data);
+    setCurrentNode(editedNode);
   }, [tableNodes, options.key]);
 
   return (
@@ -27,12 +34,10 @@ const EditorTemplate = ({
       <input
         type="text"
         placeholder="description"
-        value={data.description}
+        defaultValue={currentNode?.data?.description}
         onChange={(e) => {
-          const newNodes = JSON.parse(JSON.stringify(tableNodes));
-          const editedNode = findNodeByKey(newNodes, options.key);
-          editedNode.data.description = e.target.value;
-          setTimerData({ editedNode });
+          const target = e.target as HTMLInputElement;
+          setNewDescription(target.value);
         }}
       />
       <input type="submit" value="Save" />

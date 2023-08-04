@@ -1,4 +1,6 @@
-export const findNodeByKey = (nodes: any, key: any) => {
+import { TableNode } from './types';
+
+export const findNodeByKey = (nodes: TableNode[], key: string) => {
   let path = key.split('-');
   let node;
 

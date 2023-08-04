@@ -1,28 +1,23 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useTimer from '../../hooks/useTimer';
 import {
   useUpdateTimerMutation,
   useDeleteTimerMutation,
 } from '../../slices/slices';
 import { findNodeByKey } from './helpers';
-
-type SingleTimerType = {
-  id: string;
-  description: string;
-  timer: number;
-};
+import { TableNode } from './types';
 
 export const ActionTemplate = ({
   nodes,
   options,
 }: {
-  nodes: never[];
-  options: any;
+  nodes: TableNode[];
+  options: TableNode;
 }) => {
   const [updateTimer] = useUpdateTimerMutation();
   const [deleteTimer] = useDeleteTimerMutation();
   const [startingPoint, setStartingPoint] = useState(0);
-  const [currentNode, setCurrentNode] = useState(null);
+  const [currentNode, setCurrentNode] = useState<TableNode>();
 
   const {
     stopTimer,
@@ -37,32 +32,34 @@ export const ActionTemplate = ({
   const onStartTimer = () => {
     if (currentNode) {
       const { data } = currentNode;
-      // @ts-ignore
+
       startTimer(data.id);
       updateTimer({
-        //@ts-ignore
         id: data.id,
         timer: startCount,
-        //@ts-ignore
         description: data.description,
         intervalId: timerInterval,
       });
     }
   };
 
-  const onStopTimer = (e: FormEvent) => {
-    e.preventDefault();
+  const onStopTimer = () => {
     stopTimer();
     if (currentNode) {
       const { data } = currentNode;
       updateTimer({
-        //@ts-ignore
         id: data.id,
         timer: startCount,
-        //@ts-ignore
         description: data.description,
         intervalId: timerInterval,
       });
+    }
+  };
+
+  const onDeleteTimer = () => {
+    if (currentNode) {
+      const { data } = currentNode;
+      deleteTimer(data.id);
     }
   };
 
@@ -83,16 +80,14 @@ export const ActionTemplate = ({
   useEffect(() => {
     if (currentNode) {
       const { data } = currentNode;
-      //@ts-ignore
       if (data.timer > 0) {
-        //@ts-ignore
         setStartingPoint(data.timer);
       }
     }
   }, [currentNode, startingPoint]);
 
   return (
-    <div>
+    <>
       {hasTimerStarted ? (
         <button onClick={onStopTimer}>Stop timer</button>
       ) : (
@@ -100,6 +95,7 @@ export const ActionTemplate = ({
       )}
       <button onClick={onPauseTimer}>Pause timer</button>
       <button onClick={onContinueTimer}>Continue timer</button>
-    </div>
+      <button onClick={onDeleteTimer}>Delete timer</button>
+    </>
   );
 };
