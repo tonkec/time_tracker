@@ -68,14 +68,6 @@ export const ActionTemplate = ({
     }
   };
 
-  const onPauseTimer = () => {
-    pauseTimer();
-  };
-
-  const onContinueTimer = () => {
-    continueTimer();
-  };
-
   return (
     <>
       {hasTimerStarted ? (
@@ -83,8 +75,6 @@ export const ActionTemplate = ({
       ) : (
         <button onClick={onStartTimer}>Start timer</button>
       )}
-      <button onClick={onPauseTimer}>Pause timer</button>
-      <button onClick={onContinueTimer}>Continue timer</button>
       <button onClick={onDeleteTimer}>Delete timer</button>
     </>
   );
