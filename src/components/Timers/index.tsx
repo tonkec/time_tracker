@@ -1,11 +1,17 @@
-import { useState, useEffect } from 'react';
-import { useFetchTimersQuery, useAddTimerMutation } from '../../slices/slices';
+import { useState, useEffect, FormEvent } from 'react';
+import {
+  useFetchTimersQuery,
+  useAddTimerMutation,
+  useUpdateTimerMutation,
+} from '../../slices/slices';
 import { Dialog } from 'primereact/dialog';
 import useTimer from '../../hooks/useTimer';
 import { TreeTable } from 'primereact/treetable';
 import { Column } from 'primereact/column';
 import { ActionTemplate } from './actionTemplate';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import EditorTemplate from './editorTemplate';
 
 const Timer = () => {
   const [tableNodes, setTableNodes] = useState([]);
@@ -43,29 +49,22 @@ const Timer = () => {
     if (!isLoading) {
       const arr: any = [];
       allTimers.forEach((timer: any, index: number) => {
-        let obj = {};
+        const obj = {
+          key: `${index}`,
+          label: 'label',
+          data: {
+            description: timer.description,
+            timer: state.counter,
+            createdAt: timer.createdAt,
+            id: timer.id,
+            intervalId: timer.intervalId,
+          },
+        };
+
         if (state.timerId === timer.id) {
-          obj = {
-            key: `${index}`,
-            label: 'label',
-            data: {
-              description: timer.description,
-              timer: state.counter,
-              createdAt: timer.createdAt,
-              id: timer.id,
-            },
-          };
+          obj.data.timer = state.counter;
         } else {
-          obj = {
-            key: `${index}`,
-            label: 'label',
-            data: {
-              description: timer.description,
-              timer: timer.timer,
-              createdAt: timer.createdAt,
-              id: timer.id,
-            },
-          };
+          obj.data.timer = timer.timer;
         }
 
         arr.push(obj);
@@ -92,15 +91,18 @@ const Timer = () => {
           <button onClick={onSaveTimer}>Save timer</button>
         </Dialog>
       </div>
-      <h1>{state.counter}</h1>
-      <h1>{state.timerId}</h1>
       <button onClick={onStopAllTimers}>Stop all timers</button>
       <button onClick={onAddNewTimer}>Add new timer</button>
 
       <div className="card">
         {!isLoading && (
           <TreeTable value={tableNodes} tableStyle={{ minWidth: '50rem' }}>
-            <Column field="description" header="Description" expander></Column>
+            <Column
+              field="description"
+              body={(options) => (
+                <EditorTemplate tableNodes={tableNodes} options={options} />
+              )}
+            ></Column>
             <Column field="timer" header="Timer"></Column>
             <Column field="createdAt" header="Created at"></Column>
             <Column
