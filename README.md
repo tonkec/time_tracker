@@ -29,6 +29,10 @@ This is the app that I quickly coded for one company that I applied to for a job
 
 The hardest part was injecting up to date data into prime react [table](https://primereact.org/treetable/#basic). I had to rely on redux to get the latest state of the counter. These subcomponents in UI table are oblivious to the state.
 
+### What was the easiest part?
+
+I styled everything in 30 minutes so that was easy. But also CRUD methods with firebase. It is superb how firebase has all these helpers methods that we can just call as hooks.
+
 ### What is missing from this project?
 
 1. Filtering is not quite finished, you can filter by any data field, but you can not set start end end date
@@ -36,3 +40,5 @@ The hardest part was injecting up to date data into prime react [table](https://
 2. Styling is not pixel perfect, there are many subtle differences between the provided design and the result.
    - Same like with filtering, even though styling is even a lesser challenge. I have done pixel perfect design many times but just did not have time to focus on that now.
 3. Toast messages to let the user know when there is an error for example in signing up/logging in
+4. Timers are now global, the same for all users, they are not connected to particular logged in user.
+   - Actually this was not specified in the task, but I guessed that each user should have had their own set of timers.
