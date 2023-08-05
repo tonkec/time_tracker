@@ -15,7 +15,7 @@ const AuthLayout = ({
     <>
       <Navbar isAuthenticated={!!user} />
       <div className="h-screen flex align-items-center justify-content-center flex-column">
-        <div className="text-center md:w-6 lg:w-5 font-bold block mb-4">
+        <div className="text-center md:w-6 lg:w-4 font-bold block mb-4">
           <div className="bg-gray-500 border-round-md pb-6 pt-3">
             {' '}
             {children}

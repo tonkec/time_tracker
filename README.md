@@ -15,7 +15,7 @@ This is the app that I quickly coded for one company that I applied to for a job
 2. CRUD for timers with [redux toolkit query](https://redux-toolkit.js.org/rtk-query)
 3. Responsivness of the app and UI components with [primerreact](https://primereact.org/)
 4. Start/stop timer with [setInterval](https://developer.mozilla.org/en-US/docs/Web/API/setInterval)
-5. History page of all timers with [react router 6](https://reactrouter.com/en/main)
+5. History page, Dashboard and 404 page with [react router 6](https://reactrouter.com/en/main)
 6. Typing with [typescript](https://www.typescriptlang.org/)
 7. Global state management with [redux toolkit query](https://redux-toolkit.js.org/)
 8. Auth state management with [context](https://react.dev/reference/react/createContext)
@@ -42,6 +42,5 @@ I styled everything in 30 minutes so that was easy. But also CRUD methods with f
 3. Toast messages to let the user know when there is an error for example in signing up/logging in
 4. Timers are now global, the same for all users, they are not connected to particular logged in user.
    - Actually this was not specified in the task, but I guessed that each user should have had their own set of timers.
-5. 404 page is missing, if you go to the broken link, you will get a blank screen
 
 I did not finish any of these because this was a test project. In real life I would need more time and more input from designers.
