@@ -42,3 +42,6 @@ I styled everything in 30 minutes so that was easy. But also CRUD methods with f
 3. Toast messages to let the user know when there is an error for example in signing up/logging in
 4. Timers are now global, the same for all users, they are not connected to particular logged in user.
    - Actually this was not specified in the task, but I guessed that each user should have had their own set of timers.
+5. 404 page is missing, if you go to the broken link, you will get a blank screen
+
+I did not finish any of these because this was a test project. In real life I would need more time and more input from designers.
