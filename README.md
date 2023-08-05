@@ -1,46 +1,38 @@
-# Getting Started with Create React App
+# Time Tracker app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the app that I quickly coded for one company that I applied to for a job of Senior React developer.
 
-## Available Scripts
+### How to run this project
 
-In the project directory, you can run:
+1. clone this repo with git
+2. install dependencies `npm install`
+3. run npm with `npm start`
+4. open `localhost:3000`
 
-### `npm start`
+### What is included in this project?
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Auth components with [Firebase](https://firebase.google.com/?)
+2. CRUD for timers with [redux toolkit query](https://redux-toolkit.js.org/rtk-query)
+3. Responsivness of the app and UI components with [primerreact](https://primereact.org/)
+4. Start/stop timer with [setInterval](https://developer.mozilla.org/en-US/docs/Web/API/setInterval)
+5. History page of all timers with [react router 6](https://reactrouter.com/en/main)
+6. Typing with [typescript](https://www.typescriptlang.org/)
+7. Global state management with [redux toolkit query](https://redux-toolkit.js.org/)
+8. Auth state management with [context](https://react.dev/reference/react/createContext)
+9. Reusable logic with [custom react hooks](https://react.dev/learn/reusing-logic-with-custom-hooks)
+10. Pagination for timers with [paginator](https://primereact.org/treetable/#paginator)
+11. CSS utility classes with [primeflex](https://www.primefaces.org/primeflex/)
+12. Theming with [themeProvider](https://primereact.org/theming/)
+13. [Styled components](https://styled-components.com/) to overwrite styles from prime react when needed.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### What was the hardest part?
 
-### `npm test`
+The hardest part was injecting up to date data into prime react [table](https://primereact.org/treetable/#basic). I had to rely on redux to get the latest state of the counter. These subcomponents in UI table are oblivious to the state.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### What is missing from this project?
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Filtering is not quite finished, you can filter by any data field, but you can not set start end end date
+   - I just did not have time to implement this even though it does not seem so difficult
+2. Styling is not pixel perfect, there are many subtle differences between the provided design and the result.
+   - Same like with filtering, even though styling is even a lesser challenge. I have done pixel perfect design many times but just did not have time to focus on that now.
+3. Toast messages to let the user know when there is an error for example in signing up/logging in

@@ -4,7 +4,7 @@ import clock from './../../icons/clock.svg';
 import quit from './../../icons/quit.svg';
 import history from './../../icons/history.svg';
 import logo from './../../icons/logo.svg';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';

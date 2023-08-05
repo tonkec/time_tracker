@@ -7,6 +7,11 @@ html,
   height: 100%;
 }
 
+body,
+html {
+  overflow: auto !important;
+}
+
 .active {
   position: relative;
   &::before {
