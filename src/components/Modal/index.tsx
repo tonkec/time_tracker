@@ -4,12 +4,14 @@ import { useAddTimerMutation } from '../../slices/slices';
 import useTimer from '../../hooks/useTimer';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 const Modal = () => {
   const [newTimerDescription, setNewTimerDescription] = useState('');
   const [isModalvisible, setIsModalVisible] = useState(false);
   const [addTimer] = useAddTimerMutation();
   const { startCount, timerInterval } = useTimer({ startFrom: 0 });
+  const [currentUser] = useLocalStorage('user', null);
 
   const onAddNewTimer = () => {
     setIsModalVisible(true);
@@ -17,11 +19,13 @@ const Modal = () => {
 
   const onSaveTimer = () => {
     const today = new Date().toISOString().slice(0, 10);
+
     addTimer({
       description: newTimerDescription,
       createdAt: today,
       timer: startCount,
       intervalId: timerInterval,
+      userId: currentUser,
     });
     setIsModalVisible(false);
   };

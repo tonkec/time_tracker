@@ -4,6 +4,7 @@ export type Timer = {
   intervalId: { current: number };
   description: string;
   createdAt: string;
+  userId: string;
 };
 
 export type TableNode = {

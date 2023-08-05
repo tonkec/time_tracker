@@ -6,6 +6,7 @@ import {
 import { findNodeByKey } from './helpers';
 import { TableNode } from './types';
 import { Button } from 'primereact/button';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 export const ActionTemplate = ({
   nodes,
@@ -16,8 +17,9 @@ export const ActionTemplate = ({
 }) => {
   const [updateTimer] = useUpdateTimerMutation();
   const [deleteTimer] = useDeleteTimerMutation();
-  let newNodes = JSON.parse(JSON.stringify(nodes));
-  let editedNode = findNodeByKey(newNodes, options.key);
+  const [currentUserId] = useLocalStorage('user', null);
+  const newNodes = JSON.parse(JSON.stringify(nodes));
+  const editedNode = findNodeByKey(newNodes, options.key);
   const { data } = editedNode;
   let startingPoint = 0;
   if (data.timer > 0) {
@@ -37,12 +39,14 @@ export const ActionTemplate = ({
         timer: startCount,
         description: data.description,
         intervalId: timerInterval,
+        userId: currentUserId,
       });
     }
   };
 
   const onStopTimer = () => {
     stopTimer();
+
     if (editedNode) {
       const { data } = editedNode;
       updateTimer({
@@ -50,6 +54,7 @@ export const ActionTemplate = ({
         timer: startCount,
         description: data.description,
         intervalId: timerInterval,
+        userId: currentUserId,
       });
     }
   };

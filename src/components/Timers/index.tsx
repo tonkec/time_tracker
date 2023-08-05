@@ -7,11 +7,13 @@ import { TableNode, Timer } from './types';
 import { stateType } from '../../slices/counterSlice';
 import Modal from '../Modal';
 import { Button } from 'primereact/button';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 const Timers = ({ hasFilter }: { hasFilter: boolean }) => {
   const [tableNodes, setTableNodes] = useState<TableNode[]>([]);
+  const [currentUserId] = useLocalStorage('user', null);
 
-  const { data: allTimers, isLoading } = useFetchTimersQuery();
+  const { data: allTimers, isLoading } = useFetchTimersQuery(currentUserId);
   const state = useSelector((state: stateType) => state.counterSlice);
 
   const onStopAllTimers = () => {
@@ -33,6 +35,7 @@ const Timers = ({ hasFilter }: { hasFilter: boolean }) => {
             createdAt: timer.createdAt,
             id: timer.id,
             intervalId: timer.intervalId,
+            userId: timer.userId,
           },
         };
 

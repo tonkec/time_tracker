@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
 
   const login = useCallback(
-    (data: any) => {
+    (data: string) => {
       setUser(data);
       navigate('/');
     },

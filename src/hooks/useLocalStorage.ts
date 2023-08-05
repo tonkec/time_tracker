@@ -20,5 +20,12 @@ export const useLocalStorage = (keyName: string, defaultValue: null) => {
     } catch (err) {}
     setStoredValue(newValue);
   };
-  return [storedValue, setValue];
+
+  const getValue = () => {
+    try {
+      const value = window.localStorage.getItem(keyName);
+      return value;
+    } catch (err) {}
+  };
+  return [storedValue, setValue, getValue];
 };

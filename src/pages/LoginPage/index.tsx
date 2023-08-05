@@ -22,7 +22,8 @@ const LoginPage = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user: any = userCredential.user;
-        login(user.accessToken);
+
+        login(user.uid);
       })
       .catch((error) => {
         const errorCode = error.code;

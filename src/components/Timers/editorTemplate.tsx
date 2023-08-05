@@ -3,7 +3,7 @@ import { findNodeByKey } from './helpers';
 import { useUpdateTimerMutation } from '../../slices/slices';
 import { TableNode } from './types';
 import { InputText } from 'primereact/inputtext';
-
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 const EditorTemplate = ({
   tableNodes,
   options,
@@ -11,6 +11,8 @@ const EditorTemplate = ({
   tableNodes: TableNode[];
   options: TableNode;
 }) => {
+  const [currentUserId] = useLocalStorage('user', null);
+
   const [currentNode, setCurrentNode] = useState<TableNode>();
   const [newDescription, setNewDescription] = useState('');
   const [updateTimer] = useUpdateTimerMutation();
@@ -19,6 +21,7 @@ const EditorTemplate = ({
     const dataToSave = currentNode?.data;
     if (dataToSave) {
       dataToSave.description = newDescription;
+      dataToSave.userId = currentUserId;
       updateTimer(dataToSave);
     }
   };
