@@ -2,7 +2,6 @@ import { useState, useEffect, FormEvent } from 'react';
 import { findNodeByKey } from './helpers';
 import { useUpdateTimerMutation } from '../../slices/slices';
 import { TableNode } from './types';
-import { current } from '@reduxjs/toolkit';
 
 const EditorTemplate = ({
   tableNodes,
@@ -30,18 +29,19 @@ const EditorTemplate = ({
   }, [tableNodes, options.key]);
 
   return (
-    <form onSubmit={onDescriptionSubmit}>
-      <input
-        type="text"
-        placeholder="description"
-        defaultValue={currentNode?.data?.description}
-        onChange={(e) => {
-          const target = e.target as HTMLInputElement;
-          setNewDescription(target.value);
-        }}
-      />
-      <input type="submit" value="Save" />
-    </form>
+    <div>
+      <form onSubmit={onDescriptionSubmit}>
+        <input
+          type="text"
+          placeholder="description"
+          defaultValue={currentNode?.data?.description}
+          onChange={(e) => {
+            const target = e.target as HTMLInputElement;
+            setNewDescription(target.value);
+          }}
+        />
+      </form>
+    </div>
   );
 };
 

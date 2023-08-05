@@ -24,15 +24,8 @@ export const ActionTemplate = ({
     startingPoint = data.timer;
   }
 
-  const {
-    stopTimer,
-    pauseTimer,
-    continueTimer,
-    startCount,
-    startTimer,
-    hasTimerStarted,
-    timerInterval,
-  } = useTimer({ startFrom: startingPoint });
+  const { stopTimer, startCount, startTimer, hasTimerStarted, timerInterval } =
+    useTimer({ startFrom: startingPoint });
 
   const onStartTimer = () => {
     if (editedNode) {

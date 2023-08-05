@@ -48,7 +48,12 @@ const FilterableTable = ({ tableNodes }: { tableNodes: TableNode[] }) => {
         ></Column>
         <Column field="timer" header="Timer"></Column>
         <Column field="createdAt" header="Created at"></Column>
-        <Column header="Actions" body={(options) => <h1>Timer</h1>}></Column>
+        <Column
+          header="Actions"
+          body={(options) => (
+            <ActionTemplate nodes={tableNodes} options={options} />
+          )}
+        ></Column>
       </TreeTable>
     </div>
   );
