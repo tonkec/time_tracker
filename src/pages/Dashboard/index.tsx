@@ -9,7 +9,7 @@ const Dashboard = () => {
   const currentDate = dd + '.' + mm + '.' + yyyy;
   return (
     <Layout>
-      <h1 style={{ marginBottom: 100, fontWeight: 700 }}>
+      <h1 style={{ marginBottom: 80, fontWeight: 700 }}>
         Today ({currentDate})
       </h1>
       <Timer hasFilter={false} />

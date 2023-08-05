@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useFetchTimersQuery } from '../../slices/slices';
-
 import { useSelector } from 'react-redux';
 import TimersTable from './TimersTable';
 import FilterableTable from './FilterableTable';

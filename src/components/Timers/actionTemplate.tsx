@@ -80,7 +80,7 @@ export const ActionTemplate = ({
       <Button
         onClick={onDeleteTimer}
         severity="danger"
-        icon="pi pi-times"
+        icon="pi pi-trash"
         style={{ marginLeft: 10 }}
       />
     </>
