@@ -7,5 +7,5 @@ export const MyInputText = styled(InputText)`
 `;
 
 export const Form = styled.form`
-  margin: 0 40px 40px;
+  margin: 0 40px 0px;
 `;
