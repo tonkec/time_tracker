@@ -12,8 +12,12 @@ const TimersTable = ({ tableNodes }: { tableNodes: TableNode[] }) => {
       tableStyle={{ minWidth: '50rem' }}
       paginator
       rows={5}
+      style={{ marginTop: 50 }}
+      resizableColumns
     >
+      <Column field="timer" header="Timer"></Column>
       <Column
+        header="Description"
         field="description"
         body={(options) => (
           <DescriptionTemplate tableNodes={tableNodes} options={options} />
@@ -21,9 +25,7 @@ const TimersTable = ({ tableNodes }: { tableNodes: TableNode[] }) => {
         editor={(options) => (
           <EditorTemplate tableNodes={tableNodes} options={options.node} />
         )}
-        onCellEditComplete={() => console.log('complete')}
       ></Column>
-      <Column field="timer" header="Timer"></Column>
       <Column field="createdAt" header="Created at"></Column>
       <Column
         header="Actions"

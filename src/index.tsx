@@ -5,8 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import store from './slices';
 import { Provider } from 'react-redux';
 import { PrimeReactProvider } from 'primereact/api';
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css';
+import 'primeicons/primeicons.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

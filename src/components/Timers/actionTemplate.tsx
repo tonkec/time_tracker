@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import useTimer from '../../hooks/useTimer';
 import {
   useUpdateTimerMutation,
@@ -6,6 +5,7 @@ import {
 } from '../../slices/slices';
 import { findNodeByKey } from './helpers';
 import { TableNode } from './types';
+import { Button } from 'primereact/button';
 
 export const ActionTemplate = ({
   nodes,
@@ -64,11 +64,25 @@ export const ActionTemplate = ({
   return (
     <>
       {hasTimerStarted ? (
-        <button onClick={onStopTimer}>Stop timer</button>
+        <Button
+          onClick={onStopTimer}
+          icon="pi pi-stop-circle"
+          aria-label="Stop timer"
+          severity="info"
+        />
       ) : (
-        <button onClick={onStartTimer}>Start timer</button>
+        <Button
+          onClick={onStartTimer}
+          icon="pi pi-play"
+          aria-label="Start timer"
+        />
       )}
-      <button onClick={onDeleteTimer}>Delete timer</button>
+      <Button
+        onClick={onDeleteTimer}
+        severity="danger"
+        icon="pi pi-times"
+        style={{ marginLeft: 10 }}
+      />
     </>
   );
 };
