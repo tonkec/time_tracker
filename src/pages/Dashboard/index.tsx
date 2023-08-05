@@ -1,27 +1,17 @@
-import { useAuth } from '../../hooks/useAuth';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase';
 import Timer from '../../components/Timers';
 import Layout from '../../components/Layout';
 
 const Dashboard = () => {
-  const { logout } = useAuth();
-
-  const onClick = () => {
-    signOut(auth)
-      .then(() => {
-        logout();
-        console.log('Signed out successfully');
-      })
-      .catch((error) => {
-        // An error happened.
-      });
-  };
-
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  const yyyy = today.getFullYear();
+  const currentDate = dd + '.' + mm + '.' + yyyy;
   return (
     <Layout>
-      <h1>Dashboard</h1>
-      <button onClick={onClick}>Log out</button>
+      <h1 style={{ marginBottom: 100, fontWeight: 700 }}>
+        Today ({currentDate})
+      </h1>
       <Timer hasFilter={false} />
     </Layout>
   );
