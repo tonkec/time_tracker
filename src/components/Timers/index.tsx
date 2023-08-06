@@ -43,22 +43,30 @@ const Timers = ({ hasFilter }: { hasFilter: boolean }) => {
         setTableNodes(arr);
       });
     }
-  }, [allTimers, isLoading, state.timerId]);
+  }, [allTimers, isLoading]);
 
   useEffect(() => {
     if (tableNodes.length > 0) {
-      const currentTimer = allTimers.filter(
-        (timer: Timer) => timer.id === state.timerId
+      const timerIdsFromState = state.counters.map(
+        (counter) => counter.timerId
       );
-      currentTimer.counter = state.counter;
 
-      tableNodes.forEach((tableNode: TableNode) => {
-        if (tableNode.data.id === state.timerId) {
-          tableNode.data.timer = state.counter;
-        }
-      });
+      const nodesToBeUpdated = tableNodes.filter((tableNode) =>
+        timerIdsFromState.includes(tableNode.data.id)
+      );
+
+      if (nodesToBeUpdated.length > 0) {
+        nodesToBeUpdated.forEach((node) => {
+          state.counters.forEach((stateCounter) => {
+            if (node.data.id === stateCounter.timerId) {
+              node.data.timer = stateCounter.counter;
+              return node;
+            }
+          });
+        });
+      }
     }
-  }, [state.counter, allTimers, state.timerId, tableNodes]);
+  }, [allTimers, tableNodes, state]);
 
   const renderTable = () => {
     if (hasFilter) {

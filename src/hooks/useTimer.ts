@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { saveTimer } from '../slices/counterSlice';
+import { saveTimerToState } from '../slices/counterSlice';
 
 export const useTimer = ({ startFrom }: { startFrom: number }) => {
   const [hasTimerStarted, setHasTimerStarted] = useState(false);
@@ -14,10 +14,10 @@ export const useTimer = ({ startFrom }: { startFrom: number }) => {
     setTimerId(id);
     const interval = window.setInterval(() => {
       setStartCount((prevCount) => {
-        dispatch(saveTimer({ counter: prevCount + 1, timerId: id }));
+        dispatch(saveTimerToState({ counter: prevCount + 1, timerId: id }));
         return prevCount + 1;
       });
-    });
+    }, 1000);
 
     timerInterval.current = interval;
     setHasTimerStarted(true);
@@ -33,14 +33,14 @@ export const useTimer = ({ startFrom }: { startFrom: number }) => {
       setStartCount((count) => {
         return count + 1;
       });
-    });
+    }, 1000);
 
     timerInterval.current = interval;
   };
 
   const stopTimer = () => {
     clearInterval(timerInterval.current);
-    dispatch(saveTimer({ counter: startCount, timerId }));
+    dispatch(saveTimerToState({ counter: startCount, timerId }));
     setHasTimerStarted(false);
   };
 
