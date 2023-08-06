@@ -1,4 +1,4 @@
-import { TableNode, Timer } from './types';
+import { TableNode } from './types';
 
 export const findNodeByKey = (nodes: TableNode[], key: string) => {
   let path = key.split('-');
