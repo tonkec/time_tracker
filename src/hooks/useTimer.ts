@@ -17,7 +17,7 @@ export const useTimer = ({ startFrom }: { startFrom: number }) => {
         dispatch(saveTimerToState({ counter: prevCount + 1, timerId: id }));
         return prevCount + 1;
       });
-    }, 1000);
+    });
 
     timerInterval.current = interval;
     setHasTimerStarted(true);
@@ -33,7 +33,7 @@ export const useTimer = ({ startFrom }: { startFrom: number }) => {
       setStartCount((count) => {
         return count + 1;
       });
-    }, 1000);
+    });
 
     timerInterval.current = interval;
   };
