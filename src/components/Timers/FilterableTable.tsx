@@ -6,6 +6,7 @@ import EditorTemplate from './editorTemplate';
 import { ActionTemplate } from './actionTemplate';
 import { TableNode } from './types';
 import DescriptionTemplate from './descriptionTemplate';
+import { sortByDate } from './helpers';
 
 const FilterableTable = ({ tableNodes }: { tableNodes: TableNode[] }) => {
   const [globalFilter, setGlobalFilter] = useState('');
@@ -37,7 +38,7 @@ const FilterableTable = ({ tableNodes }: { tableNodes: TableNode[] }) => {
   return (
     <div className="card">
       <TreeTable
-        value={tableNodes}
+        value={sortByDate(tableNodes)}
         globalFilter={globalFilter}
         header={header}
         filterMode="lenient"
