@@ -1,13 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Timer } from '../components/Timers/types';
 
-type initialStateType = { counters: [{ counter: number; timerId: string }] };
+type initialStateType = {
+  counters: Timer[];
+};
 
 export type stateType = {
   counterSlice: initialStateType;
 };
 
 const initialState: initialStateType = {
-  counters: [{ counter: 0, timerId: '' }],
+  counters: [
+    {
+      counter: 0,
+      id: '',
+      intervalId: { current: 0 },
+      timer: 0,
+      description: '',
+      createdAt: '',
+      userId: '',
+      formattedTime: '',
+    },
+  ],
 };
 
 export const counterSlice = createSlice({
@@ -25,7 +39,7 @@ export const counterSlice = createSlice({
 
       if (alreadyInState) {
         alreadyInState.counter = action.payload.counter;
-        alreadyInState.timerId = action.payload.timerId;
+        alreadyInState.id = action.payload.timerId;
       }
     },
   },

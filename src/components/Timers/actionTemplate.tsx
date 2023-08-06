@@ -33,7 +33,7 @@ export const ActionTemplate = ({
     if (editedNode) {
       const { data } = editedNode;
 
-      startTimer(data.id);
+      startTimer(data);
       updateTimer({
         id: data.id,
         timer: startCount,

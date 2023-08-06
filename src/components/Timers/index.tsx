@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useFetchTimersQuery } from '../../slices/slices';
+import {
+  useUpdateTimerMutation,
+  useFetchTimersQuery,
+} from '../../slices/slices';
 import { useSelector } from 'react-redux';
 import TimersTable from './TimersTable';
 import FilterableTable from './FilterableTable';
@@ -13,13 +16,23 @@ import { formatTime } from './helpers';
 const Timers = ({ hasFilter }: { hasFilter: boolean }) => {
   const [tableNodes, setTableNodes] = useState<TableNode[]>([]);
   const [currentUserId] = useLocalStorage('user', null);
-
+  const [updateTimer] = useUpdateTimerMutation();
   const { data: allTimers, isLoading } = useFetchTimersQuery(currentUserId);
   const state = useSelector((state: stateType) => state.counterSlice);
 
   const onStopAllTimers = () => {
     allTimers.forEach((timer: Timer) => {
       return clearInterval(timer.intervalId.current);
+    });
+
+    state.counters.forEach((counter) => {
+      clearInterval(counter.id);
+      const counterToBeSaved = {
+        ...counter,
+        timer: counter.counter,
+      };
+
+      updateTimer(counterToBeSaved);
     });
   };
 
@@ -38,6 +51,7 @@ const Timers = ({ hasFilter }: { hasFilter: boolean }) => {
             intervalId: timer.intervalId,
             userId: timer.userId,
             formattedTime: formatTime(timer.timer),
+            counter: timer.counter,
           },
         };
 
@@ -49,9 +63,7 @@ const Timers = ({ hasFilter }: { hasFilter: boolean }) => {
 
   useEffect(() => {
     if (tableNodes.length > 0) {
-      const timerIdsFromState = state.counters.map(
-        (counter) => counter.timerId
-      );
+      const timerIdsFromState = state.counters.map((counter) => counter.id);
 
       const nodesToBeUpdated = tableNodes.filter((tableNode) =>
         timerIdsFromState.includes(tableNode.data.id)
@@ -60,7 +72,7 @@ const Timers = ({ hasFilter }: { hasFilter: boolean }) => {
       if (nodesToBeUpdated.length > 0) {
         nodesToBeUpdated.forEach((node) => {
           state.counters.forEach((stateCounter) => {
-            if (node.data.id === stateCounter.timerId) {
+            if (node.data.id === stateCounter.id) {
               node.data.timer = stateCounter.counter;
               node.data.formattedTime = formatTime(stateCounter.counter);
               return node;

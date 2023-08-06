@@ -6,6 +6,7 @@ export type Timer = {
   createdAt: string;
   userId: string;
   formattedTime: string;
+  counter: number;
 };
 
 export type TableNode = {
