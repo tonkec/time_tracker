@@ -6,7 +6,7 @@ const Links = ({ componentType }: { componentType: string }) => {
   return (
     <div className="mt-6 flex align-items-center font-bold block bg-gray-500 border-round-md">
       <ReactSVG src={user} style={{ marginBottom: -2, marginLeft: 30 }} />
-      <div>
+      <div style={{ textAlign: 'left' }}>
         {componentType === 'login' ? (
           <>
             <span className="text-bluegray-500 font-normal mb-2 inline-block">
