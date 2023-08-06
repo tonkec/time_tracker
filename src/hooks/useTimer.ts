@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { saveTimerToState } from '../slices/counterSlice';
 import { Timer } from '../components/Timers/types';
@@ -50,10 +50,6 @@ export const useTimer = ({ startFrom }: { startFrom: number }) => {
     dispatch(saveTimerToState({ counter: startCount, timerId }));
     setHasTimerStarted(false);
   };
-
-  useEffect(() => {
-    setStartCount(startFrom);
-  }, [startFrom]);
 
   return {
     startTimer,
