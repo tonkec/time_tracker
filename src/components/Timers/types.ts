@@ -5,6 +5,7 @@ export type Timer = {
   description: string;
   createdAt: string;
   userId: string;
+  formattedTime: string;
 };
 
 export type TableNode = {

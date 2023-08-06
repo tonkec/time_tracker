@@ -3,7 +3,7 @@ import {
   useUpdateTimerMutation,
   useDeleteTimerMutation,
 } from '../../slices/slices';
-import { findNodeByKey } from './helpers';
+import { findNodeByKey, formatTime } from './helpers';
 import { TableNode } from './types';
 import { Button } from 'primereact/button';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
@@ -40,6 +40,7 @@ export const ActionTemplate = ({
         description: data.description,
         intervalId: timerInterval,
         userId: currentUserId,
+        formattedTime: formatTime(startCount),
       });
     }
   };
@@ -55,6 +56,7 @@ export const ActionTemplate = ({
         description: data.description,
         intervalId: timerInterval,
         userId: currentUserId,
+        formattedTime: formatTime(startCount),
       });
     }
   };

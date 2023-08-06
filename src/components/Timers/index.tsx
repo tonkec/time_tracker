@@ -8,6 +8,7 @@ import { stateType } from '../../slices/counterSlice';
 import Modal from '../Modal';
 import { Button } from 'primereact/button';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { formatTime } from './helpers';
 
 const Timers = ({ hasFilter }: { hasFilter: boolean }) => {
   const [tableNodes, setTableNodes] = useState<TableNode[]>([]);
@@ -36,6 +37,7 @@ const Timers = ({ hasFilter }: { hasFilter: boolean }) => {
             id: timer.id,
             intervalId: timer.intervalId,
             userId: timer.userId,
+            formattedTime: formatTime(timer.timer),
           },
         };
 
@@ -60,6 +62,7 @@ const Timers = ({ hasFilter }: { hasFilter: boolean }) => {
           state.counters.forEach((stateCounter) => {
             if (node.data.id === stateCounter.timerId) {
               node.data.timer = stateCounter.counter;
+              node.data.formattedTime = formatTime(stateCounter.counter);
               return node;
             }
           });

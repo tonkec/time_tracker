@@ -15,7 +15,7 @@ const TimersTable = ({ tableNodes }: { tableNodes: TableNode[] }) => {
       style={{ marginTop: 50 }}
       resizableColumns
     >
-      <Column field="timer" header="Timer"></Column>
+      <Column field="formattedTime" header="Timer"></Column>
       <Column
         header="Description"
         field="description"
