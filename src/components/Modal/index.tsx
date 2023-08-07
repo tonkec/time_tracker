@@ -5,6 +5,7 @@ import useTimer from '../../hooks/useTimer';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { formatTime } from '../Timers/helpers';
 
 const Modal = () => {
   const [newTimerDescription, setNewTimerDescription] = useState('');
@@ -26,6 +27,7 @@ const Modal = () => {
       timer: startCount,
       intervalId: timerInterval,
       userId: currentUser,
+      formattedTime: formatTime(startCount),
     });
     setIsModalVisible(false);
   };
