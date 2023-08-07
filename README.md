@@ -39,5 +39,3 @@ I styled everything in 30 minutes so that was easy. But also CRUD methods with f
    - I just did not have time to implement this even though it does not seem so difficult
 2. Styling is not pixel perfect, there are many subtle differences between the provided design and the result.
    - Same like with filtering, even though styling is even a lesser challenge. I have done pixel perfect design many times but just did not have time to focus on that now.
-
-I did not finish any of these because this was a test project. In real life I would need more time and more input from designers.
