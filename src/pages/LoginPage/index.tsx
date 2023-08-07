@@ -1,12 +1,14 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, useRef } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useAuth } from '../../hooks/useAuth';
 import AuthLayout from '../../components/Layout/AuthLayout';
 import { Form, MyInputText } from './LoginPage.styles';
 import { Button } from 'primereact/button';
+import { Toast } from 'primereact/toast';
 
 const LoginPage = () => {
+  const toast = useRef<Toast>(null);
   const { login } = useAuth();
 
   const [email, setEmail] = useState('');
@@ -22,10 +24,23 @@ const LoginPage = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user: any = userCredential.user;
-
-        login(user.uid);
+        toast.current?.show({
+          severity: 'success',
+          summary: 'Welcome',
+          detail: 'Successfully signed in!',
+        });
+        setTimeout(() => {
+          login(user.uid);
+        }, 1000);
       })
       .catch((error) => {
+        console.log(toast.current);
+        toast.current?.show({
+          severity: 'error',
+          summary: 'Wrong credentials',
+          detail: 'You are using wrong email password combination',
+        });
+
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
@@ -33,6 +48,7 @@ const LoginPage = () => {
   };
   return (
     <AuthLayout componentType="login">
+      <Toast ref={toast} />
       <Form onSubmit={onSubmit}>
         <h1 style={{ marginBottom: 60, marginTop: 40 }}>Login</h1>
         <div>
