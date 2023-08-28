@@ -11,9 +11,11 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 export const ActionTemplate = ({
   nodes,
   options,
+  isFilterableTable,
 }: {
   nodes: TableNode[];
   options: TableNode;
+  isFilterableTable?: boolean;
 }) => {
   const [updateTimer] = useUpdateTimerMutation();
   const [deleteTimer] = useDeleteTimerMutation();
@@ -68,9 +70,9 @@ export const ActionTemplate = ({
     }
   };
 
-  return (
-    <>
-      {hasTimerStarted ? (
+  const renderTimerButtons = () => {
+    if (!isFilterableTable) {
+      return hasTimerStarted ? (
         <Button
           onClick={onStopTimer}
           icon="pi pi-stop-circle"
@@ -83,7 +85,13 @@ export const ActionTemplate = ({
           icon="pi pi-play"
           aria-label="Start timer"
         />
-      )}
+      );
+    }
+  };
+
+  return (
+    <>
+      {renderTimerButtons()}
       <Button
         onClick={onDeleteTimer}
         severity="danger"

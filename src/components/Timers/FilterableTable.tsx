@@ -62,7 +62,11 @@ const FilterableTable = ({ tableNodes }: { tableNodes: TableNode[] }) => {
         <Column
           header="Actions"
           body={(options) => (
-            <ActionTemplate nodes={tableNodes} options={options} />
+            <ActionTemplate
+              isFilterableTable={true}
+              nodes={tableNodes}
+              options={options}
+            />
           )}
         ></Column>
       </TreeTable>
